@@ -3,6 +3,8 @@ import { useNavigate } from "react-router";
 import useAuthUser from "../hooks/useAuthUser";
 import { GoogleSignInButton } from "../components/GoogleSignInButton";
 
+const envBaseUrl = import.meta.env.VITE_API_URL;
+
 const GoogleLoginPage = () => {
   const navigate = useNavigate();
   const { authUser, isLoading } = useAuthUser();
@@ -14,8 +16,9 @@ const GoogleLoginPage = () => {
   }, [authUser, isLoading, navigate]);
 
   const handleGoogleLogin = () => {
-    window.location.href = "http://localhost:5001/api/auth/google";
+  window.location.href = `${envBaseUrl}/api/auth/google`;
   };
+
 
   if (isLoading) {
     return (
