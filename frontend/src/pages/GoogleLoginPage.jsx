@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import useAuthUser from "../hooks/useAuthUser";
 import { GoogleSignInButton } from "../components/GoogleSignInButton";
 
-const envBaseUrl = import.meta.env.VITE_API_URL;
+const envBaseUrl = import.meta.env.VITE_API_URL || "http://localhost:5001";
 
 const GoogleLoginPage = () => {
   const navigate = useNavigate();

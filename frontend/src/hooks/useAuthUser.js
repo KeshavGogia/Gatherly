@@ -6,6 +6,7 @@ const useAuthUser = () => {
     queryKey: ["authUser"],
     queryFn: getAuthUser,
     retry: false, // auth check
+    refetchOnWindowFocus: true, // refetch when window regains focus (after OAuth redirect)
   });
 
   return { isLoading: authUser.isLoading, authUser: authUser.data?.user };

@@ -16,8 +16,9 @@ export async function googleCallback(req, res) {
     res.cookie("jwt", token, {
       maxAge: 7 * 24 * 60 * 60 * 1000,
       httpOnly: true,
-      sameSite: "lax",
+      sameSite: "none",
       secure: process.env.NODE_ENV === "production",
+      domain: process.env.NODE_ENV === "production" ? undefined : undefined,
     });
 
     // Redirect to frontend
@@ -34,7 +35,11 @@ export function logout(req, res) {
       console.error("Logout error:", err);
     }
   });
-  res.clearCookie("jwt");
+  res.clearCookie("jwt", {
+    httpOnly: true,
+    sameSite: "none",
+    secure: process.env.NODE_ENV === "production",
+  });
   res.clearCookie("connect.sid");
   res.status(200).json({ success: true, message: "Logout successful" });
 }
