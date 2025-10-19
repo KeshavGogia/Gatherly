@@ -16,9 +16,9 @@ export async function googleCallback(req, res) {
     res.cookie("jwt", token, {
       maxAge: 7 * 24 * 60 * 60 * 1000,
       httpOnly: true,
-      sameSite: "none",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       secure: process.env.NODE_ENV === "production",
-      domain: process.env.NODE_ENV === "production" ? undefined : undefined,
+      domain: process.env.NODE_ENV === "production" ? ".onrender.com" : undefined,
     });
 
     // Redirect to frontend
@@ -37,8 +37,9 @@ export function logout(req, res) {
   });
   res.clearCookie("jwt", {
     httpOnly: true,
-    sameSite: "none",
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
     secure: process.env.NODE_ENV === "production",
+    domain: process.env.NODE_ENV === "production" ? ".onrender.com" : undefined,
   });
   res.clearCookie("connect.sid");
   res.status(200).json({ success: true, message: "Logout successful" });
