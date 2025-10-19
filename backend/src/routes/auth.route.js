@@ -20,7 +20,10 @@ router.get(
 router.post("/logout", logout);
 
 // check if user is logged in
-router.get("/me", protectRoute, (req, res) => {
+// router.get("/me", protectRoute, (req, res) => {
+//   res.status(200).json({ success: true, user: req.user });
+// });
+router.get("/me", (req, res) => {
   res.status(200).json({ success: true, user: req.user });
 });
 
