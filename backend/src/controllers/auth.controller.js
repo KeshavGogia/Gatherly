@@ -18,8 +18,10 @@ export async function googleCallback(req, res) {
       httpOnly: true,
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       secure: process.env.NODE_ENV === "production",
-      domain: process.env.NODE_ENV === "production" ? ".onrender.com" : undefined,
     });
+
+    console.log("Google callback - JWT token set:", token);
+    console.log("Google callback - Redirecting to:", process.env.FRONTEND_URL || "http://localhost:5175");
 
     // Redirect to frontend
     res.redirect(process.env.FRONTEND_URL || "http://localhost:5175");
@@ -39,7 +41,6 @@ export function logout(req, res) {
     httpOnly: true,
     sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
     secure: process.env.NODE_ENV === "production",
-    domain: process.env.NODE_ENV === "production" ? ".onrender.com" : undefined,
   });
   res.clearCookie("connect.sid");
   res.status(200).json({ success: true, message: "Logout successful" });
